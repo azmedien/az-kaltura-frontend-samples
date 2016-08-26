@@ -1,0 +1,66 @@
+<html>
+<body>
+<meta name="author" content="Philipp Killer, philipp.killer/a/azmedien.ch" />
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdnapi.kaltura.com/p/1719221/sp/171922100/embedIframeJs/uiconf_id/31420151/partner_id/1719221"></script>
+<script>
+    (function($) {
+
+        // Embed Kaltura Media Player in jQuery's ready handler
+        $(function() {
+
+            var mediaProxyEntry = {
+                'entryCuePoints': [{
+                    adType: 1
+                    , cuePointType: "adCuePoint.Ad"
+                    , protocolType: 1
+                    , sourceUrl: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]"
+                    // set to half of the video length later on
+                    , startTime: 4000
+                }]
+            };
+
+            // embed video
+            kWidget.embed({
+                'targetId': 'kalturaVideo',
+                'wid': '_1719221',
+                'uiconf_id': 31420151,
+                'entry_id': '1_197asqy9',// YouTube: 1_197asqy9, Kaltura: 1_kiqnqxqe
+                'flashvars': {
+                    'autoPlay':true
+                    , 'mediaProxy': mediaProxyEntry
+                },
+                'readyCallback': function(playerID) {
+                    var kdp = document.getElementById('kalturaVideo');
+
+                    kdp.kBind('cuePointsReceived', function( points ) {
+
+                        var duration = kdp.evaluate('{mediaProxy.entry.duration}');
+                        // start ad after half the video has played
+                        // if duration is not set (YouTube videos) play ad after 30s
+                        var startTime = (duration > 0) ? Math.floor(duration / 2) * 1000 : 30000;
+
+                        // set cue point at runtime
+                        mediaProxyEntry.entryCuePoints[0].startTime = startTime;
+                        kdp.setKDPAttribute('mediaProxy', 'entryCuePoints', mediaProxyEntry.entryCuePoints);
+                        // console.log('mediaProxy cue points updated: ', kdp.evaluate('{mediaProxy.entryCuePoints.0}'));
+                        points[0] = kdp.evaluate('{mediaProxy.entryCuePoints.0}');
+                        console.log('mediaProxy cue points updated: ', points);
+                    });
+
+                    kdp.kBind('adOpportunity', function( point ){
+                        console.log('cue point reached', point);
+                    });
+                }
+            });
+        });
+
+    })(jQuery);
+</script>
+<h1>Always add an ad at mid time or after 30s</h1>
+<div id="kalturaVideo" style="width: 560px; height: 395px;"></div>
+<div id="log"></div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdnapi.kaltura.com/p/1719221/sp/171922100/embedIframeJs/uiconf_id/31420151/partner_id/1719221"></script>
+<script>
+    (function($) {
+
+        // Embed Kaltura Media Player in jQuery's ready handler
+        $(function() {
+
+            // request metadata for video
+            var requestObject = [
+                {
+                    "contextDataParams": {
+                        "referrer": "http://player.kaltura.com/kWidget/tests/kWidget.api.html",
+                        "objectType": "KalturaEntryContextDataParams",
+                        "flavorTags": "all"
+                    },
+                    "service": "baseentry",
+                    "entryId": "1_iv22knwb",
+                    "action": "getContextData"
+                },
+                {
+                    "service": "metadata_metadata",
+                    "action": "list",
+                    "version": "-1",
+                    "filter:metadataObjectTypeEqual": 1,
+                    "filter:orderBy": "+createdAt",
+                    "filter:objectIdEqual": "1_iv22knwb",
+                    "pager:pageSize": 1
+                }
+            ];
+            new kWidget.api( {
+                'wid' : '_1719221'
+            }).doRequest( requestObject, function( result ) {
+                console.log(result);
+            });
+
+            // embed video
+            kWidget.embed({
+                'targetId': 'kalturaVideo',
+                'wid': '_1719221',
+                'uiconf_id': 31420151,
+                'entry_id': '1_iv22knwb',
+                'flashvars': {
+                    'autoPlay':true,
+                    'playServerUrls.plugin': false
+                },
+                'readyCallback': function(playerID) {
+                    // var kdp = document.getElementById('kalturaVideo');
+                    // console.log('playServerUrls', kdp.evaluate('{playServerUrls}'));
+                }
+            });
+        });
+
+
+    })(jQuery);
+</script>
+
+<div id="kalturaVideo" style="width: 560px; height: 395px;"></div>
+
+</body>
+</html>

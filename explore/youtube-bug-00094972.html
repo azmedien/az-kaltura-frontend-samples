@@ -1,0 +1,53 @@
+<html>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdnapi.kaltura.com/p/1719221/sp/171922100/embedIframeJs/uiconf_id/26605721/partner_id/1719221/usePlayServer/1"></script>
+<script>
+    (function($) {
+
+        // Embed Kaltura Media Player in jQuery's ready handler
+        $(function() {
+            kWidget.embed({
+                'targetId': 'youtube',
+                'wid': '_1719221',
+                'uiconf_id': 26605721, // player has playServer plugin enabled
+                'entry_id': '1_u69bhncc',
+                'flashvars': {
+                    'autoPlay':true,
+                    'playServerUrls.plugin': true,
+                    'playServerUrls.enablenOn': 'all'
+                },
+                'readyCallback': function(playerID) {
+                    var kdp = document.getElementById('kalturaVideo');
+                    //console.log('playServerUrls', kdp.evaluate('{playServerUrls}'));
+                }
+            });
+
+            kWidget.embed({
+                'targetId': 'regular',
+                'wid': '_1719221',
+                'uiconf_id': 26605721, // player has playServer plugin enabled
+                'entry_id': '0_l4bk5doe',
+                'flashvars': {
+                    'autoPlay':true,
+                    'playServerUrls.plugin': true,
+                    'playServerUrls.enablenOn': 'all'
+                },
+                'readyCallback': function(playerID) {
+                    var kdp = document.getElementById('kalturaVideo');
+                    //console.log('playServerUrls', kdp.evaluate('{playServerUrls}'));
+                }
+            });
+        });
+
+
+    })(jQuery);
+</script>
+
+<div id="youtube" style="width: 560px; height: 395px;"></div>
+
+<div id="regular" style="width: 560px; height: 395px;"></div>
+
+</body>
+</html>
