@@ -1,29 +1,20 @@
 <html>
 <body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<div id="kalturaVideo" style="width: 560px; height: 395px;"></div>
 <script src="https://cdnapisec.kaltura.com/p/1719221/sp/171922100/embedIframeJs/uiconf_id/36239082/partner_id/1719221"></script>
 <script>
-    (function($) {
+    kWidget.embed({
+        'targetId': 'kalturaVideo',
+        'wid': '_1719221',
+        'uiconf_id': 36239082, // player has playServer plugin disabled
+        'entry_id': '1_ah4drifm',// YouTube video
+        'flashvars': {
+            'autoPlay':false
+        }
+    });
 
-        // Embed Kaltura Media Player in jQuery's ready handler
-        $(function() {
-            kWidget.embed({
-                'targetId': 'kalturaVideo',
-                'wid': '_1719221',
-                'uiconf_id': 36239082, // player has playServer plugin disabled
-                'entry_id': '1_ah4drifm',// YouTube video
-                'flashvars': {
-                    'autoPlay':false
-                }
-            });
-        });
-
-
-    })(jQuery);
 </script>
-
-<div id="kalturaVideo" style="width: 560px; height: 395px;"></div>
 
 </body>
 </html>
