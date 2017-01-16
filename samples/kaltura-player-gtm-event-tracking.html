@@ -9,7 +9,7 @@
     })(window,document,'script','dataLayer','GTM-NJHPHXB');</script>
     <!-- End Google Tag Manager -->
 </head>
-<body>
+<body id="myBody">
 
 <div id="kalturaVideo" style="width: 560px; height: 395px;"></div>
 <script src="https://cdnapisec.kaltura.com/p/1719221/sp/171922100/embedIframeJs/uiconf_id/37925061/partner_id/1719221"></script>
@@ -24,8 +24,38 @@
         }
     });
 
+    // log player events
+    kWidget.addReadyCallback( function( playerId ){
+        var kdp = document.getElementById( playerId );
+
+        // fired when play button is clicked
+        kdp.kBind("playerPlayed", function() {
+            console.log("playerPlayed (Kaltura player event)");
+        });
+
+        console.log("kdp: installing onClick and onmouseover events for the Kaltura player");
+        console.log(document.getElementById(playerId));
+
+        // NOT fired
+        kdp.onclick=function() {
+            console.log("onClick on player");
+        };
+
+        // fired once when mouse enters the player
+        kdp.onmouseover=function() {
+            console.log("onmouseover on player");
+        };
+
+        // fired when body is clicked
+        document.getElementById("myLink").onclick=function() {
+            console.log("onClick on a link");
+        };
+    });
+
+
 </script>
 
+<p><a href="#" id="myLink">A link</a></p>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJHPHXB"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
